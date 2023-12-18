@@ -1,0 +1,62 @@
+name: Build
+
+on:
+  repository_dispatch:
+    types:
+      - "test build"
+jobs:
+  # ------------------------
+  affected_apps:
+    runs-on: ubuntu-latest
+    outputs:
+      regional: ${{ steps.generate-matrix.outputs.regional }}
+      default: ${{ steps.generate-matrix.outputs.default }}
+    steps:
+      - name: Derive affected app names
+        id: derive-affected
+        shell: bash
+        # run: export AFFECTED="gift-voucher-fe leaflet-be leaflet-fe" && echo ::set-output name=derive-affected::$AFFECTED && echo $AFFECTED
+        run: |
+          export AFFECTED='${{ github.event.client_payload.affected }}' && echo ::set-output name=derive-affected::$AFFECTED && echo $AFFECTED
+      - name: Generate Matrix
+        id: generate-matrix
+        shell: bash
+        env:
+          AFFECTED: ${{ steps.affected_apps.outputs.affected_apps }}
+        run: |
+          chmod +x ./scripts/filter.sh
+          ./scripts/filter.sh
+  # ------------------------
+  my_echo:
+    runs-on: ubuntu-latest
+    needs:
+      - affected_apps
+    steps:
+      - name: Echo previous outputs
+        run: echo "${{ toJSON(needs.affected_apps.outputs) }}"
+        # ------------------------
+  default_matrix:
+    runs-on: ubuntu-latest
+    needs:
+      - affected_apps
+      - my_echo
+    strategy:
+      matrix:
+        default: ${{ fromJSON(needs.affected_apps.outputs.default) }}
+    steps:
+      - name: Default Matrix => (${{ matrix.default }})
+        run: |
+          echo ${{ matrix.default }}
+  # ------------------------
+  regional_matrix:
+    runs-on: ubuntu-latest
+    needs:
+      - affected_apps
+      - my_echo
+    strategy:
+      matrix:
+        regional: ${{ fromJSON(needs.affected_apps.outputs.regional) }}
+    steps:
+      - name: Regional Matrix => (${{ matrix.regional }})
+        run: |
+          echo ${{ matrix.regional }}
