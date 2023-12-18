@@ -18,6 +18,9 @@ jobs:
         # run: export AFFECTED="gift-voucher-fe leaflet-be leaflet-fe" && echo ::set-output name=derive-affected::$AFFECTED && echo $AFFECTED
         run: |
           export AFFECTED='${{ github.event.client_payload.affected }}' && echo ::set-output name=derive-affected::$AFFECTED && echo $AFFECTED
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Generate Matrix
         id: generate-matrix
         shell: bash
