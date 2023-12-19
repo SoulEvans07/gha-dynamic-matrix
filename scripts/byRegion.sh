@@ -36,7 +36,8 @@ echo "default: [$(echo ${defaultAffected[@]} | tr ' ' ',')]"
 echo "cz=${czAffected[@]}" >> $GITHUB_OUTPUT
 echo "hu=${huAffected[@]}" >> $GITHUB_OUTPUT
 echo "sk=${skAffected[@]}" >> $GITHUB_OUTPUT
+echo "default=${defaultAffected[@]}" >> $GITHUB_OUTPUT
 echo "cz_array=[$(echo ${czAffected[@]} | tr ' ' ',')]" >> $GITHUB_OUTPUT
 echo "hu_array=[$(echo ${huAffected[@]} | tr ' ' ',')]" >> $GITHUB_OUTPUT
 echo "sk_array=[$(echo ${skAffected[@]} | tr ' ' ',')]" >> $GITHUB_OUTPUT
-echo "default=[$(echo ${defaultAffected[@]} | tr ' ' ',')]" >> $GITHUB_OUTPUT
+echo "default_array=[$(echo ${defaultAffected[@]} | tr ' ' ',')]" >> $GITHUB_OUTPUT

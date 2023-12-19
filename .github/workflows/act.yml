@@ -13,10 +13,11 @@ jobs:
       cz: ${{ steps.generate-matrix.outputs.cz }}
       hu: ${{ steps.generate-matrix.outputs.hu }}
       sk: ${{ steps.generate-matrix.outputs.sk }}
+      default: ${{ steps.generate-matrix.outputs.default }}
       cz_array: ${{ steps.generate-matrix.outputs.cz_array }}
       hu_array: ${{ steps.generate-matrix.outputs.hu_array }}
       sk_array: ${{ steps.generate-matrix.outputs.sk_array }}
-      default: ${{ steps.generate-matrix.outputs.default }}
+      default_array: ${{ steps.generate-matrix.outputs.default_array }}
     steps:
       - name: Derive affected app names
         id: derive-affected
@@ -50,7 +51,7 @@ jobs:
           echo "${{ needs.affected_apps.outputs.sk }}"
       - name: JSON tests
         run: |
-          echo "${{ fromJSON(needs.affected_apps.outputs.default) }}"
+          echo "${{ fromJSON(needs.affected_apps.outputs.default_array) }}"
           echo "${{ fromJSON(needs.affected_apps.outputs.cz_array) }}"
           echo "${{ fromJSON(needs.affected_apps.outputs.hu_array) }}"
           echo "${{ fromJSON(needs.affected_apps.outputs.sk_array) }}"
@@ -67,7 +68,7 @@ jobs:
         region: ["default", "cz", "hu", "sk"]
     steps:
       - name: build:ppe:${{ matrix.region }}
-        if: ${{ needs.affected_apps.outputs.[matrix.region] != '[]' }}
+        if: ${{ needs.affected_apps.outputs[matrix.region] != '[]' }}
         run: |
           echo "nx run-many -t container --configuration=ppe:${{ matrix.region }} -p ${{ needs.affected_apps.outputs[matrix.region] }}"
   # ------------------------
@@ -83,7 +84,7 @@ jobs:
         region: ["default", "cz", "hu", "sk"]
     steps:
       - name: build:ppe:${{ matrix.region }}
-        if: ${{ needs.affected_apps.outputs.[matrix.region] != '[]' }}
+        if: ${{ needs.affected_apps.outputs[matrix.region] != '[]' }}
         run: |
           echo "nx run-many -t container --configuration=ppe:${{ matrix.region }} -p ${{ needs.affected_apps.outputs[matrix.region] }}"
   # ------------------------
@@ -99,9 +100,9 @@ jobs:
         region: ["default", "cz", "hu", "sk"]
     steps:
       - name: deploy:ppe:${{ matrix.region }}
-        if: ${{ needs.affected_apps.outputs.[matrix.region] != '[]' }}
+        if: ${{ needs.affected_apps.outputs[matrix.region] != '[]' }}
         run: |
-          echo "deploy ppe:${{ matrix.region }}" -p ${{ needs.affected_apps.outputs[matrix.region] }}"
+          echo "deploy ppe:${{ matrix.region }} -p ${{ needs.affected_apps.outputs[matrix.region] }}"
   # ------------------------
   deploy_prod_matrix:
     name: Deploy Prod
@@ -116,6 +117,6 @@ jobs:
         region: ["default", "cz", "hu", "sk"]
     steps:
       - name: deploy:prod:${{ matrix.region }}
-        if: ${{ needs.affected_apps.outputs.[matrix.region] != '[]' }}
+        if: ${{ needs.affected_apps.outputs[matrix.region] != '[]' }}
         run: |
-          echo "deploy prod:${{ matrix.region }}" -p ${{ needs.affected_apps.outputs[matrix.region] }}"
+          echo "deploy prod:${{ matrix.region }} -p ${{ needs.affected_apps.outputs[matrix.region] }}"
