@@ -43,6 +43,7 @@ jobs:
     needs:
       - affected_apps
       - my_echo
+    if: ${{ needs.affected_apps.outputs.default != '' }}
     strategy:
       matrix:
         default: ${{ fromJSON(needs.affected_apps.outputs.default) }}
@@ -56,6 +57,7 @@ jobs:
     needs:
       - affected_apps
       - my_echo
+    if: ${{ needs.affected_apps.outputs.regional != '' }}
     strategy:
       matrix:
         regional: ${{ fromJSON(needs.affected_apps.outputs.regional) }}
