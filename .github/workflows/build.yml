@@ -35,7 +35,9 @@ jobs:
       - affected_apps
     steps:
       - name: Echo previous outputs
-        run: echo "${{ toJSON(needs.affected_apps.outputs) }}"
+        run: |
+          echo "${{ toJSON(needs.affected_apps.outputs) }}"
+          echo "${{ fromJSON(needs.affected_apps.outputs) }}"
         # ------------------------
   default_matrix:
     runs-on: ubuntu-latest
