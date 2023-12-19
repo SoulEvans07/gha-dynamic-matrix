@@ -37,7 +37,6 @@ jobs:
       - name: Echo previous outputs
         run: |
           echo "${{ toJSON(needs.affected_apps.outputs) }}"
-          echo "${{ fromJSON(needs.affected_apps.outputs) }}"
         # ------------------------
   default_matrix:
     runs-on: ubuntu-latest
@@ -47,7 +46,7 @@ jobs:
     if: ${{ needs.affected_apps.outputs.default != '' }}
     strategy:
       matrix:
-        default: ${{ fromJSON(needs.affected_apps.outputs.default) }}
+        default: ${{ needs.affected_apps.outputs.default }}
     steps:
       - name: Default Matrix => (${{ matrix.default }})
         run: |
@@ -61,7 +60,7 @@ jobs:
     if: ${{ needs.affected_apps.outputs.regional != '' }}
     strategy:
       matrix:
-        regional: ${{ fromJSON(needs.affected_apps.outputs.regional) }}
+        regional: ${{ needs.affected_apps.outputs.regional }}
     steps:
       - name: Regional Matrix => (${{ matrix.regional }})
         run: |
