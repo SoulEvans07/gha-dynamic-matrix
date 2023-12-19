@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 echo "filter: $AFFECTED"
 
-CZ=("leaflet-be" "only-cz" "no-hu")
+CZ=("only-cz")
 HU=("leaflet-be" "voucher-fe")
-SK=("leaflet-be" "voucher-fe" "no-hu")
+SK=("leaflet-be" "voucher-fe" "only-sk")
 
 # Filter elements in AFFECTED that are also in REGIONAL
 czAffected=()
