@@ -68,7 +68,7 @@ jobs:
         region: ["default", "cz", "hu", "sk"]
     steps:
       - name: build:ppe:${{ matrix.region }}
-        if: ${{ needs.affected_apps.outputs[matrix.region] != '[]' }}
+        if: ${{ needs.affected_apps.outputs[matrix.region] != '' }}
         run: |
           echo "nx run-many -t container --configuration=ppe:${{ matrix.region }} -p ${{ needs.affected_apps.outputs[matrix.region] }}"
   # ------------------------
@@ -84,7 +84,7 @@ jobs:
         region: ["default", "cz", "hu", "sk"]
     steps:
       - name: build:ppe:${{ matrix.region }}
-        if: ${{ needs.affected_apps.outputs[matrix.region] != '[]' }}
+        if: ${{ needs.affected_apps.outputs[matrix.region] != '' }}
         run: |
           echo "nx run-many -t container --configuration=ppe:${{ matrix.region }} -p ${{ needs.affected_apps.outputs[matrix.region] }}"
   # ------------------------
@@ -100,7 +100,7 @@ jobs:
         region: ["default", "cz", "hu", "sk"]
     steps:
       - name: deploy:ppe:${{ matrix.region }}
-        if: ${{ needs.affected_apps.outputs[matrix.region] != '[]' }}
+        if: ${{ needs.affected_apps.outputs[matrix.region] != '' }}
         run: |
           echo "deploy ppe:${{ matrix.region }} -p ${{ needs.affected_apps.outputs[matrix.region] }}"
   # ------------------------
@@ -117,6 +117,6 @@ jobs:
         region: ["default", "cz", "hu", "sk"]
     steps:
       - name: deploy:prod:${{ matrix.region }}
-        if: ${{ needs.affected_apps.outputs[matrix.region] != '[]' }}
+        if: ${{ needs.affected_apps.outputs[matrix.region] != '' }}
         run: |
           echo "deploy prod:${{ matrix.region }} -p ${{ needs.affected_apps.outputs[matrix.region] }}"
