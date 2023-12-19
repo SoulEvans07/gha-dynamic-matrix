@@ -8,9 +8,9 @@ regionalAffected=()
 defaultAffected=()
 for element in ${AFFECTED[@]}; do
   if [[ " ${REGIONAL[@]} " =~ " $element " ]]; then
-    regionalAffected+=("$element")
+    regionalAffected+=("\"$element\"")
   else
-    defaultAffected+=("$element")
+    defaultAffected+=("\"$element\"")
   fi
 done
 

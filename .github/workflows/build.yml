@@ -49,10 +49,10 @@ jobs:
     needs:
       - affected_apps
       - my_echo
-    if: ${{ needs.affected_apps.outputs.default != '' }}
+    if: ${{ needs.affected_apps.outputs.default != '[]' }}
     strategy:
       matrix:
-        default: ${{ needs.affected_apps.outputs.default }}
+        default: ${{ fromJSON(needs.affected_apps.outputs.default) }}
     steps:
       - name: Default Matrix => (${{ matrix.default }})
         run: |
@@ -63,10 +63,10 @@ jobs:
     needs:
       - affected_apps
       - my_echo
-    if: ${{ needs.affected_apps.outputs.regional != '' }}
+    if: ${{ needs.affected_apps.outputs.regional != '[]' }}
     strategy:
       matrix:
-        regional: ${{ needs.affected_apps.outputs.regional }}
+        regional: ${{ fromJSON(needs.affected_apps.outputs.regional) }}
     steps:
       - name: Regional Matrix => (${{ matrix.regional }})
         run: |
