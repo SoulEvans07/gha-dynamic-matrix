@@ -7,8 +7,7 @@ REGIONAL=("voucher-fe" "leaflet-be")
 regionalAffected=()
 defaultAffected=()
 for element in ${AFFECTED[@]}; do
-
-  if [[ " ${REGIONAL[@]} " =~ "$element" ]]; then
+  if [[ " ${REGIONAL[@]} " =~ " $element " ]]; then
     regionalAffected+=("$element")
   else
     defaultAffected+=("$element")
@@ -16,8 +15,8 @@ for element in ${AFFECTED[@]}; do
 done
 
 # Print the regionalAffected array
-echo "regional: $regionalAffected"
-echo "default: $defaultAffected"
+echo "regional: ${regionalAffected[@]}"
+echo "default: ${defaultAffected[@]}"
 
-echo ::set-output name=regional::${regionalAffected}
-echo ::set-output name=default::${defaultAffected}
+echo "regional=${regionalAffected[@]}" >> $GITHUB_OUTPUT
+echo "default=${defaultAffected[@]}" >> $GITHUB_OUTPUT

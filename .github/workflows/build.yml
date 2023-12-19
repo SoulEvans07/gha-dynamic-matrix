@@ -27,7 +27,7 @@ jobs:
         run: |
           echo "from env: $AFFECTED"
           chmod +x ./scripts/filter.sh
-          export AFFECTED='${{ env.AFFECTED }}' && ./scripts/filter.sh
+          ./scripts/filter.sh
   # ------------------------
   my_echo:
     runs-on: ubuntu-latest
