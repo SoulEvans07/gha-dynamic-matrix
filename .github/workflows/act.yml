@@ -37,7 +37,7 @@ jobs:
           ./scripts/byRegion.sh
   # ------------------------
   my_echo:
-    name: Echo
+    name: Debug Echo
     runs-on: ubuntu-latest
     needs:
       - affected_apps
