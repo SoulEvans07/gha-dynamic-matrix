@@ -18,5 +18,9 @@ done
 echo "regional: ${regionalAffected[@]}"
 echo "default: ${defaultAffected[@]}"
 
-echo "regional=${regionalAffected[@]}" >> $GITHUB_OUTPUT
-echo "default=${defaultAffected[@]}" >> $GITHUB_OUTPUT
+echo "toJSON"
+echo "regional: [$(echo ${regionalAffected[@]} | tr ' ' ',')]"
+echo "default: [$(echo ${defaultAffected[@]} | tr ' ' ',')]"
+
+echo "regional=[$(echo ${regionalAffected[@]} | tr ' ' ',')]" >> $GITHUB_OUTPUT
+echo "default=[$(echo ${defaultAffected[@]} | tr ' ' ',')]" >> $GITHUB_OUTPUT
