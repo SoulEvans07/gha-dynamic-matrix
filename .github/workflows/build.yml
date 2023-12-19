@@ -17,18 +17,17 @@ jobs:
         shell: bash
         # run: export AFFECTED="gift-voucher-fe leaflet-be leaflet-fe" && echo ::set-output name=derive-affected::$AFFECTED && echo $AFFECTED
         run: |
-          export AFFECTED='${{ github.event.client_payload.affected }}' && echo ::set-output name=derive-affected::$AFFECTED && echo $AFFECTED
+          echo "AFFECTED=${{ github.event.client_payload.affected }}" >> $GITHUB_ENV
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Generate Matrix
         id: generate-matrix
         shell: bash
-        env:
-          AFFECTED: ${{ steps.affected_apps.outputs.affected_apps }}
         run: |
+          echo "from env: $AFFECTED"
           chmod +x ./scripts/filter.sh
-          ./scripts/filter.sh
+          export AFFECTED='${{ env.AFFECTED }}' && ./scripts/filter.sh
   # ------------------------
   my_echo:
     runs-on: ubuntu-latest
